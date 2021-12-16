@@ -10,7 +10,7 @@ import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.junit.jupiter.api.*;
 import utils.EMF_Creator;
-import utils.Environment;
+
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;

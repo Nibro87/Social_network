@@ -1,8 +1,7 @@
 package facades;
 
 
-import entities.Comments;
-import entities.SharedArticles;
+
 import entities.User;
 import org.junit.jupiter.api.*;
 import utils.EMF_Creator;
@@ -22,8 +21,7 @@ public class FacadeExampleTest {
     private static EntityManagerFactory emf;
     private static FacadeExample facade;
     private static UserFacade userFacade;
-    private static PostFacade postFacade;
-     SharedArticles sharedArticles;
+
 
     public FacadeExampleTest() {
     }
@@ -34,7 +32,7 @@ public class FacadeExampleTest {
 
        facade = FacadeExample.getFacadeExample(emf);
       userFacade = UserFacade.getUserFacade(emf);
-      postFacade = PostFacade.getPostFacade(emf);
+
     }
 
     @AfterAll
@@ -68,61 +66,19 @@ public class FacadeExampleTest {
         EntityManager em = emf.createEntityManager();
         User user = new User("user2","test1","test@test.com");
          User user1 = new User("user1","test1","test@test.com");
-        SharedArticles sharedArticles = new SharedArticles("test","test","test,test","test","test","test");
-        SharedArticles sharedArticles1 = new SharedArticles("test","test","test,test","test","test","test");
-        sharedArticles.setUser(user);
-        sharedArticles1.setUser(user1);
+
 
 
      em.getTransaction().begin();
      em.persist(user);
      em.persist(user1);
-     em.persist(sharedArticles);
-     em.persist(sharedArticles1);
+
      em.getTransaction().commit();
 
 
     }
 
-    @Disabled
-    @Test
-    public void addComments() {
 
-
-        Comments expected = userFacade.addComments(new Comments(1L,"test1"));
-
-       Comments actual = new Comments(1L,"test1");
-
-
-        assertEquals(expected,actual);
-    }
-
-    @Test
-    public void testArticleList(){
-
-        List<SharedArticles> actual = postFacade.getAllArticles();
-
-        int expected = 2;
-
-        assertEquals(expected,actual.size());
-
-
-    }
-
-   @Disabled
-    @Test
-    public void testDeleteById(){
-
-        SharedArticles actual = postFacade.deleteById(1L);
-
-        SharedArticles expected = new SharedArticles(1L,"test","test","test,test","test","test","test");
-
-
-        assertEquals(expected,actual);
-
-
-
-    }
 
 
 }

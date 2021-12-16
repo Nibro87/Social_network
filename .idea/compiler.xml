@@ -13,7 +13,7 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="CA2" options="-endorseddirs C:\Users\nicho\OneDrive\Dokumenter\GitHub\examProject\target/endorsed" />
+      <module name="CA2" options="-endorseddirs C:\Users\nicho\OneDrive\Dokumenter\GitHub\Socialnetwork\target/endorsed" />
       <module name="devops-starter" options="-endorseddirs C:\Users\nicho\OneDrive\Dokumenter\GitHub\securityStart\target/endorsed" />
     </option>
   </component>

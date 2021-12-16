@@ -6,11 +6,9 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import entities.Role;
-import entities.SharedArticles;
+
 import entities.User;
 import java.util.List;
-import java.util.concurrent.Future;
-import javax.annotation.PostConstruct;
 import javax.annotation.security.RolesAllowed;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -18,8 +16,6 @@ import javax.persistence.TypedQuery;
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
 
-import errorhandling.API_Exception;
-import facades.PostFacade;
 import facades.UserFacade;
 import utils.EMF_Creator;
 
@@ -30,7 +26,7 @@ import utils.EMF_Creator;
 public class DemoResource {
 
     private final UserFacade userFacade = UserFacade.getUserFacade(EMF);
-    private final PostFacade postFacade = PostFacade.getPostFacade(EMF);
+
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
     private static final EntityManagerFactory EMF = EMF_Creator.createEntityManagerFactory();
     @Context
@@ -42,7 +38,7 @@ public class DemoResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public String getInfoForAll() {
-        return "{\"msg\":\"Hello anonymous\"}";
+        return "{\"msg\":\"Hello anonymous how are you\"}";
     }
 
     //Just to verify if the database is setup
@@ -108,71 +104,8 @@ public class DemoResource {
 
     }
 
-    @POST
-    @Path("share")
-
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-
-    public Response addArticle(String jsonString){
-
-        String urlToImage;
-        String url;
-        String title;
-        String publishedAt;
-        String description;
-        String comment;
-        String shared_by;
-
-        JsonObject json = JsonParser.parseString(jsonString).getAsJsonObject();
-
-        urlToImage = json.get("urlToImage").getAsString();
-        url = json.get("url").getAsString();
-        title = json.get("title").getAsString();
-        publishedAt = json.get("publishedAt").getAsString();
-        description = json.get("description").getAsString();
-        comment = json.get("comment").getAsString();
-        shared_by = json.get("sharedby").getAsString();
-
-        SharedArticles article1 = new SharedArticles(urlToImage,url,title,publishedAt,description,comment);
-        String username = shared_by;
-        User user = userFacade.getUser(username);
-        article1.setUser(user);
-
-        SharedArticles article = postFacade.addArticle(article1);
 
 
-        JsonObject responseJson = new JsonObject();
-        responseJson.addProperty("url", url);
-
-
-        return Response.ok(GSON.toJson(responseJson),"application/json").build();
-    }
-
-    @GET
-    @Path("/allposts")
-    @RolesAllowed("user")
-    public Response getAllPosts(){
-
-
-
-        return Response.ok(GSON.toJson(postFacade.getAllArticles()),"application/json").build();
-    }
-
-    @GET
-    @Path("/delete")
-
-    @Produces(MediaType.APPLICATION_JSON)
-    public void deleteArticle(@QueryParam("id") Long id){
-
-        //String thisuser = securityContext.getUserPrincipal().getName();
-       //SharedArticles article = postFacade.findById(id);
-
-        ///if(article != null){
-           // if (article.getUser().getUserName().equals(thisuser)){
-        postFacade.deleteById(id);
-
-    }
         }
 
 
